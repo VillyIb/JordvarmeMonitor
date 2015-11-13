@@ -1,0 +1,557 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<log4net>
+  <!-- see: http://logging.apache.org/log4net/release/manual/configuration.html -->
+  <!-- 
+    Default appender.
+  -->
+  <appender name="General" type="log4net.Appender.RollingFileAppender">
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+
+    <rollingStyle value="Date" />
+    <datePattern value="yyyy-MM-dd_HH'_General(09).log'" />
+    <staticLogFileName value="False" />
+
+    <!-- Customer Option Specify KB|MB|GB -->
+    <maximumFileSize value="10MB" />
+
+    <!-- Customer Option -->
+    <maxSizeRollBackups value="10" />
+
+    <immediateFlush value="True" />
+    <countDirection value="-1" />
+    <!-- lockingModel type="log4net.Appender.FileAppender+ExclusiveLock" / -->
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%date{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level %ndc ‡%-45logger{9}-%-30M:"%message"%newline' />
+    </layout>
+
+  </appender>
+
+
+<!-- ERROR Appender - only log ERRORS and more serious levels -->
+ 
+  <appender name="Error" type="log4net.Appender.RollingFileAppender">
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+
+	<!-- Filter out levels less than Error -->
+	<filter type="log4net.Filter.LevelRangeFilter">
+		<levelMin value="ERROR" />
+		<levelMax value="OFF" />
+	</filter>
+	
+	<!-- Filter what levels to log for -->
+    <rollingStyle value="Date" />
+    <datePattern value="yyyy-MM-dd'_ERROR.log'" />
+    <staticLogFileName value="False" />
+
+    <!-- Customer Option Specify KB|MB|GB -->
+    <maximumFileSize value="10MB" />
+
+    <!-- Customer Option -->
+    <maxSizeRollBackups value="10" />
+
+    <immediateFlush value="True" />
+    <countDirection value="-1" />
+    <!-- lockingModel type="log4net.Appender.FileAppender+ExclusiveLock" / -->
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%date{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level %ndc ‡%-45logger{9}-%-30M:"%message"%newline' />
+    </layout>
+
+  </appender>
+  
+  
+  <!-- LOGGERS -->
+  <!-- Standard levels: OFF|EMERGENCY|FATAL|ALERT|CRITICAL|SEVERE|ERROR|WARN|NOTICE|INFO|DEBUG|FINE|TRACE|FINER|VERBOSE|FINEST|ALL -->
+
+  <!-- The root logger is defining the default level -->
+  <root>
+    <!-- 
+      Notice for services is the Threshold set at runtime by a registry setting.
+      This requires the root level to be set at the most detailed level expected.
+    -->
+    <level value="All" />
+
+    <appender-ref ref="General" />
+	<appender-ref ref="Error" />  <!-- Extra appender only for level error+ -->
+  </root>
+
+  <!-- Explicit control the logging of program flow using the Tracer -->
+  <logger name="nu.gtx">
+    <level value="All" />
+  </logger>
+ 
+  <logger name="nu.gtx.MenuControl">
+	<level value="Info" />
+  </logger>
+
+  <logger name="nu.get.Pages.Temp.New_Historik">
+	<level value="Info" />
+  </logger>
+ 
+  <logger name="nu.gtx.GtxSystem.DataBaseAccess">
+	<level value="Info" />
+  </logger>
+  
+  <logger name="nu.gtx.LogControl">
+	<level value="Info" />
+  </logger>
+  
+  <logger name="nu.gtx.Calculate.Shipment">
+	<level value="Warn" />
+  </logger>
+  
+  <!-- Controls logging of Matrix Lookup -->
+  <logger name="nu.gtx.GtxSystem2.Matrix">
+	<level value="Warn" />
+  </logger>
+  
+  <logger name="nu.gtx.Pages.Customer.Ship">
+	<level value="All" />
+  </logger>
+
+  <logger name="nu.gtx.BasePageAuthenticated">
+	<level value="All" />
+  </logger>
+
+  <logger name="nu.gtx.GtxSystem.AXline">
+	<level value="Info" />
+  </logger>
+    
+  <logger name="nu.gtx.KNDK.ShipmentDynamicData">
+	<level value="Info" />
+  </logger>
+    
+  <logger name="nu.gtx.Common2.Utils.CssUtil">
+	<level value="Info" />
+  </logger>
+
+  <logger name="nu.gtx.CustomControls.LoginControlV2">
+	<level value="Info" />
+  </logger>
+  
+  <logger name="nu.gtx.BasePage">
+	<level value="Info" />
+  </logger>
+    
+  <logger name="nu.gtx.Pages.Customer.Ship">
+	<level value="Info" />
+  </logger>
+  
+  <!-- DHL communication logging -->
+
+  <appender name="DHL" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'DHL_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_CA_DHL(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="DHL" additivity="False">
+    <level value="All" />
+    <appender-ref ref="DHL" />
+  </logger>
+
+  
+  <!-- FedEx communication logging -->
+
+  <appender name="FedEx" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'FedEx_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_CA_FedEx(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="FedEx" additivity="False">
+    <level value="All" />
+    <appender-ref ref="FedEx" />
+  </logger>
+
+  <!-- UPS communication logging -->
+
+  <appender name="UPS" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'UPS_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_CA_UPS(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="UPS" additivity="False">
+    <level value="All" />
+    <appender-ref ref="UPS" />
+  </logger>
+
+    <!-- GLS communication logging -->
+
+  <appender name="GLS" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'UPS_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_CA_GLS(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="GLS" additivity="False">
+    <level value="All" />
+    <appender-ref ref="GLS" />
+  </logger>
+
+
+	<!-- LogBss Log Business logic communication logging -->
+
+	<appender name="LogBss" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'LogBss_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_Business(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+		<conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> 
+		<!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+		<!-- <conversionPattern value='%date{yyyy-MM-dd HH:mm:ss} B%-7thread ‡%logger{5}-%message%newline' /> -->
+    </layout>
+	</appender>
+
+  <logger name="LogBss" additivity="False">
+    <level value="All" />
+    <appender-ref ref="LogBss" />
+  </logger>
+
+  <logger name="Business" additivity="False">
+    <level value="All" />
+    <appender-ref ref="LogBss" />
+  </logger>
+
+    
+<appender name="Pickup" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'Pickup_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_Pickup(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+		<!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+		<!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+		<conversionPattern value='%message%newline' />
+    </layout>
+	</appender>
+
+  <logger name="Pickup" additivity="False">
+    <level value="All" />
+    <appender-ref ref="Pickup" />
+  </logger>
+
+
+<appender name="PDK" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'LogBss_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_CA_PDK(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+		<!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+		<!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+		<conversionPattern value='%message%newline' />
+    </layout>
+	</appender>
+
+  <logger name="PDK" additivity="False">
+    <level value="All" />
+    <appender-ref ref="PDK" />
+  </logger>
+
+  <appender name="Shot" type="log4net.Appender.RollingFileAppender">
+
+    <!--- File name will be like: 'LogBss_2014-12-31.log' -->
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_Shot(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+
+<!-- Booking specific logging  -->
+
+  <appender name="WS_DACHSER" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_WS_DACHSER(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="BOOKING_DACHSER" additivity="False">
+    <level value="All" />
+    <appender-ref ref="WS_DACHSER" />
+  </logger>
+
+  
+  <appender name="WS_STILLLEBEN" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_WS_STILLLEBEN(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="BOOKING_STILLLEBEN" additivity="False">
+    <level value="All" />
+    <appender-ref ref="WS_STILLLEBEN" />
+  </logger>
+  
+
+  <appender name="WS_TRIC" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_WS_TRIC(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="BOOKING_TRIC" additivity="False">
+    <level value="All" />
+    <appender-ref ref="WS_TRIC" />
+  </logger>
+
+    
+  <appender name="WS_WEBSHIPR" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_WS_WEBSHIPR(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+      <!--<conversionPattern value='%utcdate{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level [%property{TrackAlias}] %ndc ‡%logger{9}-%M:"%message"%newline' />-->
+      <conversionPattern value='%message%newline' />
+    </layout>
+  </appender>
+
+  <logger name="BOOKING_WEBSHIPR" additivity="False">
+    <level value="All" />
+    <appender-ref ref="WS_WEBSHIPR" />
+  </logger>
+
+    
+  <appender name="CONSIGNOR" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX_Consignor\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd_HH-mm'_WS_CONSIGNOR(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+	<conversionPattern value='%date{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level %ndc ‡%-45logger{9}-%-30M:"%message"%newline' />      
+    <!-- 	<conversionPattern value='%message%newline' /> -->
+    </layout>
+  </appender>
+
+  <logger name="nu.gtx.Consignor.ShipmentImporter.DomainModel" additivity="False">
+    <level value="All" />
+    <appender-ref ref="CONSIGNOR" />
+  </logger>
+
+  <logger name="nu.gtx.Standard.DomainModel.ImportQueue.ImportQueueContext" additivity="False">
+    <level value="All" />
+    <appender-ref ref="CONSIGNOR" />
+  </logger>
+
+  <logger name="nu.gtx.Business.ShipmentImporter" additivity="False">
+    <level value="All" />
+    <appender-ref ref="CONSIGNOR" />
+  </logger>
+
+  <logger name="nu.gtx.Services.ConsignorShipmentImporter" additivity="False">
+    <level value="All" />
+    <appender-ref ref="CONSIGNOR" />
+  </logger>
+  
+
+    
+  <appender name="SHL_SCAN" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_WS_DHL_SCAN(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+	<conversionPattern value='%date{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level %ndc ‡%-45logger{9}-%-30M:"%message"%newline' />      
+    <!-- 	<conversionPattern value='%message%newline' /> -->
+    </layout>
+  </appender>
+
+  <logger name="nu.gtx.Services.DhlWeightScan" additivity="False">
+    <level value="All" />
+    <appender-ref ref="SHL_SCAN" />
+  </logger>
+
+  <logger name="nu.gtx.Classes.DHLScan.DHL_Scan" additivity="False">
+    <level value="All" />
+    <appender-ref ref="SHL_SCAN" />
+  </logger>  
+  
+  
+    <appender name="FtpService" type="log4net.Appender.RollingFileAppender">
+
+    <file type="log4net.Util.PatternString" value="C:\WebSitesLog\GTX\" />
+    <appendToFile value="True" />
+    <rollingStyle value="DATE" />
+    <datePattern value="yyyy-MM-dd'_UT_FtpService(09).log'" />
+    <immediateFlush value="True" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <staticLogFileName value="False" />
+
+    <!--<layout type="log4net.Layout.XmlLayoutSchemaLog4j">-->
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- <conversionPattern value="%threadT %-5level [%property{Operation}] %utcdate{yyyy-MM-dd HH:mm:ss,fff} %ndc %logger{9}.%M:'%message'%newline" /> -->
+	<conversionPattern value='%date{yyyy-MM-dd HH:mm:ss,fff} B%-7thread %-7level %ndc ‡%-45logger{9}-%-30M:"%message"%newline' />      
+    <!-- 	<conversionPattern value='%message%newline' /> -->
+    </layout>
+  </appender>
+
+  <logger name="nu.gtx.Communication.FTP.FtpServiceV2" additivity="False">
+    <level value="All" />
+    <appender-ref ref="FtpService" />
+  </logger>
+
+  
+</log4net>
