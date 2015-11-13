@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf - 8" ?> <body style="-ms-zoom: 1;">
+		<div style="display: inline-block; position: relative;">
+  		<div id="prop"><script type="text/javascript">
+titel ="Booster";  
+image = "1.png";
+refreshtime = 30;
+RefreshLink ="";
+</script>
+<style type="text/css">
+body{background:#FFFFFF;}
+#values{width:840px; height:638px;}
+#pos0{position:absolute; top:90px; left:120px;}
+#pos0, #pos0 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos1{position:absolute; top:90px; left:269px;}
+#pos1, #pos1 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos2{position:absolute; top:40px; left:539px;}
+#pos2, #pos2 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos3{position:absolute; top:40px; left:120px;}
+#pos3, #pos3 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos4{position:absolute; top:90px; left:543px;}
+#pos4, #pos4 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos5{position:absolute; top:279px; right:361px;}
+#pos5, #pos5 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: right;}
+#pos6{position:absolute; top:387px; left:191px;}
+#pos6, #pos6 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos7{position:absolute; top:175px; left:191px;}
+#pos7, #pos7 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos8{position:absolute; top:228px; left:191px;}
+#pos8, #pos8 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos9{position:absolute; top:334px; left:191px;}
+#pos9, #pos9 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos10{position:absolute; top:184px; left:450px;}
+#pos10, #pos10 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos11{position:absolute; top:143px; left:349px;}
+#pos11, #pos11 a{font-family: Arial; font-size: 32px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos12{position:absolute; top:262px; left:725px;}
+#pos12, #pos12 a{font-family: Arial; font-size: 27px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos13{position:absolute; top:294px; left:713px;}
+#pos13, #pos13 a{font-family: Arial; font-size: 27px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos14{position:absolute; top:281px; left:85px;}
+#pos14, #pos14 a{font-family: Arial; font-size: 27px; color: rgb(0,0,0); font-style: normal; font-weight: normal; text-align: left;}
+#pos15{position:absolute; top:77px; left:106px; width:152px; height:62px; cursor:pointer;}
+</style>
+</div>
+  		<div id="values">  <div id="pos0">
+21:44:48
+  </div>
+  <div id="pos1">
+12.11.2015
+  </div>
+  <div id="pos2">
+Inde: 
+  9,5  °C  </div>
+  <div id="pos3">
+Dyssekilde jordvarme
+  </div>
+  <div id="pos4">
+Ude: 
+  7,6  °C  </div>
+  <div id="pos5">~    0 l/h  </div>
+  <div id="pos6">
+  9,1  °C  </div>
+  <div id="pos7">
+  6,8  °C  </div>
+  <div id="pos8"> 1,14 bar  </div>
+  <div id="pos9"> 1,26 bar  </div>
+  <div id="pos10"><a href="javascript:loadChanger('11020C50180');">AUTO<br /> 3,90 V  </a>  </div>
+  <div id="pos11">
+  <a href="javascript:loadChanger('10520A10180');">
+MAN/ON  </a>
+  </div>
+  <div id="pos12">
+ca 3 km 
+  </div>
+  <div id="pos13">
+jordslange
+  </div>
+  <div id="pos14">
+Huse
+  </div>
+  <div class="durchsichtig" id="pos15" onclick="reload();">
+  </div>
+</div>
+		<div id="schema"><img src="schematic_files/1.png" /></div>
+		
+  	</div>
+  	<span class="lang" id="s_OK">OK</span>
+    <span class="lang" id="s_Abbrechen">Abbrechen</span>
+  
+<div tabindex="-1" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons ui-draggable ui-resizable" role="dialog" aria-describedby="changer" aria-labelledby="ui-id-1" style="display: none; position: absolute;"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-id-1">Change Value</span><button title="close" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false"><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div class="ui-dialog-content ui-widget-content" id="changer">CHANGE</div><div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"><div class="ui-dialog-buttonset"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" type="button"><span class="ui-button-text">OK</span></button><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false" type="button"><span class="ui-button-text">Abbrechen</span></button></div></div><div class="ui-resizable-handle ui-resizable-n" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-w" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-sw" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-ne" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-nw" style="z-index: 90;"></div></div></body>
