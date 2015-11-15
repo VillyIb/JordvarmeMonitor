@@ -48,20 +48,14 @@ body{background:#FFFFFF;}
   <div id="pos1">
 12.11.2015
   </div>
-  <div id="pos2">
-Inde: 
-  9,5  °C  </div>
+  <div id="pos2">Inde:   9,5  °C  </div>
   <div id="pos3">
 Dyssekilde jordvarme
   </div>
-  <div id="pos4">
-Ude: 
-  7,6  °C  </div>
+  <div id="pos4">Ude:   7,6  °C  </div>
   <div id="pos5">~    0 l/h  </div>
-  <div id="pos6">
-  9,1  °C  </div>
-  <div id="pos7">
-  6,8  °C  </div>
+  <div id="pos6">  9,1  °C  </div>
+  <div id="pos7">  6,8  °C  </div>
   <div id="pos8"> 1,14 bar  </div>
   <div id="pos9"> 1,26 bar  </div>
   <div id="pos10"><a href="javascript:loadChanger('11020C50180');">AUTO<br /> 3,90 V  </a>  </div>

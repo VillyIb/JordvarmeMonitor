@@ -41,68 +41,117 @@ namespace JordvarmeMonitor
         private void XuAnalyzeDom_Click(object sender, EventArgs e)
         {
             //XuAnalyzeDom.Enabled = false;
-
-            var t1 = XuWeBrowser.Document;
-            var t2 = XuWeBrowser.Document.DomDocument;
-            var t3 = XuWeBrowser.DocumentText;
-            //var t5 = XuWeBrowser.DocumentCompleted
-
-            mshtml.IHTMLDocument2 iDoc = (mshtml.IHTMLDocument2)XuWeBrowser.Document.DomDocument;
-
-            if (iDoc != null)
+            try
             {
-                var t14 = iDoc.body.outerHTML;
+                var t1 = XuWeBrowser.Document;
+                var t2 = XuWeBrowser.Document.DomDocument;
+                var t3 = XuWeBrowser.DocumentText;
+                //var t5 = XuWeBrowser.DocumentCompleted
 
-                var t21 = new XmlDocument();
-                var t22 = $"<?xml version=\"1.0\" encoding=\"utf - 8\" ?> {t14}";
-                var t23 = t22.Replace("<br>", "<br />").Replace("png\">", "png\" />");
-                t21.LoadXml(t23);
+                mshtml.IHTMLDocument2 iDoc = (mshtml.IHTMLDocument2) XuWeBrowser.Document.DomDocument;
+
+                if (iDoc != null)
+                {
+                    var t14 = iDoc.body.outerHTML;
+
+                    var t21 = new XmlDocument();
+                    var t22 = $"<?xml version=\"1.0\" encoding=\"utf - 8\" ?> {t14}";
+                    var t23 = t22.Replace("<br>", "<br />").Replace("png\">", "png\" />");
+                    t21.LoadXml(t23);
 
 
-                // <div id="pos8"> 1,14 bar  </div>
-                var xp1 = "//div[@id='pos8']";
-                var t33 = t21.DocumentElement.SelectSingleNode(xp1);
+                    // <div id="pos8"> 1,14 bar  </div>
+                    var xp1 = "//div[@id='pos8']";
+                    var t33 = t21.DocumentElement.SelectSingleNode(xp1);
 
-                float pressureIn;
-                var t53 = t33.InnerText.Substring(2).Replace("bar", "");
-                float.TryParse(t53, out pressureIn);
+                    float pressureIn;
+                    var t53 = t33.InnerText.Substring(2).Replace("bar", "");
+                    float.TryParse(t53, out pressureIn);
 
-                // <div id="pos9"> 1,26 bar  </div>
-                var xp2 = "//div[@id='pos9']";
-                var t34 = t21.DocumentElement.SelectSingleNode(xp2);
+                    // <div id="pos9"> 1,26 bar  </div>
+                    var xp2 = "//div[@id='pos9']";
+                    var t34 = t21.DocumentElement.SelectSingleNode(xp2);
 
-                float pressureOut;
-                var t54 = t34.InnerText.Substring(2).Replace("bar", "");
-                float.TryParse(t54, out pressureOut);
+                    float pressureOut;
+                    var t54 = t34.InnerText.Substring(2).Replace("bar", "");
+                    float.TryParse(t54, out pressureOut);
 
-                // <div id="pos10"><a href="javascript:loadChanger('11020C50180');">AUTO<br /> 3,90 V  </a>  </div>
-                var xp3 = "//div[@id='pos10']/a";
-                var t35 = t21.DocumentElement.SelectSingleNode(xp3);
+                    // <div id="pos10"><a href="javascript:loadChanger('11020C50180');">AUTO<br /> 3,90 V  </a>  </div>
+                    var xp3 = "//div[@id='pos10']/a";
+                    var t35 = t21.DocumentElement.SelectSingleNode(xp3);
 
-                float speed;
-                var t55 = t35.InnerXml.Substring(11).Replace("V", "");
-                float.TryParse(t55, out speed);
+                    float speed;
+                    var t55 = t35.InnerXml.Substring(11).Replace("V", "");
+                    float.TryParse(t55, out speed);
 
-                // <div id="pos5">~    0 l/h  </div>
-                var xp4 = "//div[@id='pos5']";
-                var t36 = t21.DocumentElement.SelectSingleNode(xp4);
+                    // <div id="pos5">~    0 l/h  </div>
+                    float crossFlow;
+                    {
+                        const string xPath = "//div[@id='pos5']";
+                        var xmlNode = t21.DocumentElement.SelectSingleNode(xPath);
 
-                float crossFlow;
-                var t56 = t36.InnerText.Substring(4).Replace("l/h", "");
-                float.TryParse(t56, out crossFlow);
+                        var value = xmlNode.InnerText.Substring(4).Replace("l/h", "");
+                        float.TryParse(value, out crossFlow);
+                    }
 
-                var msg = $"{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss};{speed};{(pressureOut - pressureIn)*10};{crossFlow};{pressureIn};{pressureOut}";
+                    //   <div id="pos2">Inde:   9,5  °C  </div>
+                    float tempAirOutdor;
+                    {
+                        const string xPath = "//div[@id='pos2']";
+                        var xmlNode = t21.DocumentElement.SelectSingleNode(xPath);
 
-                BoosterLog.Info(msg);
+                        var value = xmlNode.InnerText.Substring(7).Replace("°C", "");
+                        float.TryParse(value, out tempAirOutdor);
+                    }
 
-                var t19 = t14;
+                    //   <div id="pos4">Ude:   7,6  °C  </div>
+                    float tempAirIndor;
+                    {
+                        const string xPath = "//div[@id='pos4']";
+                        var xmlNode = t21.DocumentElement.SelectSingleNode(xPath);
+
+                        var value = xmlNode.InnerText.Substring(7).Replace("°C", "");
+                        float.TryParse(value, out tempAirIndor);
+                    }
+
+                    // <div id="pos6">  9,1  °C  </div>
+                    float tempBrineIn;
+                    {
+                        const string xPath = "//div[@id='pos6']";
+                        var xmlNode = t21.DocumentElement.SelectSingleNode(xPath);
+
+                        var value = xmlNode.InnerText.Substring(2).Replace("°C", "");
+                        float.TryParse(value, out tempBrineIn);
+                    }
+
+                    //   <div id="pos7">  6,8  °C  </div>
+                    float tempBrineOut;
+                    {
+                        const string xPath = "//div[@id='pos7']";
+                        var xmlNode = t21.DocumentElement.SelectSingleNode(xPath);
+
+                        var value = xmlNode.InnerText.Substring(2).Replace("°C", "");
+                        float.TryParse(value, out tempBrineOut);
+                    }
+
+                    var msg =
+                        $"{DateTime.UtcNow:HH:mm:ss};{speed:F};{(pressureOut - pressureIn)*10:F};{Math.Min(99f, crossFlow)/10f:F1};{pressureIn:F};{pressureOut:F};{tempBrineIn:F1};{tempBrineOut:f1};{tempAirIndor:F1};{tempAirOutdor:F1};{crossFlow}";
+
+                    BoosterLog.Info(msg);
+
+                    var t19 = t14;
+                }
+
+
+
+                var t4 = t1;
             }
+            catch(NullReferenceException)
+            { }
 
-
-
-            var t4 = t1;
-
-            XuAnalyzeDom.Enabled = !XuAnalyzeDom.Enabled;
+            XuAnalyzeDom.Enabled = false;
+            System.Threading.Thread.Sleep(500);
+            XuAnalyzeDom.Enabled = true;
         }
 
         private void XuWeBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)

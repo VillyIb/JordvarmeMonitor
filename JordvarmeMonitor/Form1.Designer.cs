@@ -44,7 +44,7 @@
             this.XuWeBrowser.Location = new System.Drawing.Point(0, 0);
             this.XuWeBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.XuWeBrowser.Name = "XuWeBrowser";
-            this.XuWeBrowser.Size = new System.Drawing.Size(1067, 882);
+            this.XuWeBrowser.Size = new System.Drawing.Size(1067, 874);
             this.XuWeBrowser.TabIndex = 0;
             this.XuWeBrowser.Url = new System.Uri("https://cmi.ta.co.at/webi/CMI004096/schema.html#1", System.UriKind.Absolute);
             this.XuWeBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.XuWeBrowser_DocumentCompleted);
@@ -108,7 +108,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 882);
+            this.ClientSize = new System.Drawing.Size(1067, 874);
             this.Controls.Add(this.XuStop);
             this.Controls.Add(this.XuTimer1);
             this.Controls.Add(this.XuAnalyzeDom);
