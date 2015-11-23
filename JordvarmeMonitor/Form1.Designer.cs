@@ -81,7 +81,7 @@
             // 
             // XuTimer
             // 
-            this.XuTimer.Interval = 30000;
+            this.XuTimer.Interval = 2000;
             this.XuTimer.Tick += new System.EventHandler(this.XuTimer_Tick);
             // 
             // XuTimer1

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using EU.Iamia.Logging;
+using JordvarmeMonitor.Businesslayer;
 
 namespace JordvarmeMonitor
 {
@@ -25,7 +27,7 @@ namespace JordvarmeMonitor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Measurements = new List<ExtractData>(2);
         }
 
         private void XuLogin_Click(object sender, EventArgs e)
@@ -38,7 +40,7 @@ namespace JordvarmeMonitor
             XuWeBrowser.Url = new Uri("https://cmi.ta.co.at/webi/CMI004096/schema.html#1");
         }
 
-        private void XuAnalyzeDom_Click(object sender, EventArgs e)
+       private void oldAnalyze()
         {
             //XuAnalyzeDom.Enabled = false;
             try
@@ -48,7 +50,7 @@ namespace JordvarmeMonitor
                 var t3 = XuWeBrowser.DocumentText;
                 //var t5 = XuWeBrowser.DocumentCompleted
 
-                mshtml.IHTMLDocument2 iDoc = (mshtml.IHTMLDocument2) XuWeBrowser.Document.DomDocument;
+                mshtml.IHTMLDocument2 iDoc = (mshtml.IHTMLDocument2)XuWeBrowser.Document.DomDocument;
 
                 if (iDoc != null)
                 {
@@ -135,7 +137,7 @@ namespace JordvarmeMonitor
                     }
 
                     var msg =
-                        $"{DateTime.UtcNow:HH:mm:ss};{speed:F};{(pressureOut - pressureIn)*10:F};{Math.Min(99f, crossFlow)/10f:F1};{pressureIn:F};{pressureOut:F};{tempBrineIn:F1};{tempBrineOut:f1};{tempAirIndor:F1};{tempAirOutdor:F1};{crossFlow}";
+                        $"{DateTime.UtcNow:HH:mm:ss};{speed:F};{(pressureOut - pressureIn) * 10:F};{Math.Min(99f, crossFlow) / 10f:F1};{pressureIn:F};{pressureOut:F};{tempBrineIn:F1};{tempBrineOut:f1};{tempAirIndor:F1};{tempAirOutdor:F1};{crossFlow}";
 
                     BoosterLog.Info(msg);
 
@@ -146,7 +148,7 @@ namespace JordvarmeMonitor
 
                 var t4 = t1;
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             { }
 
             XuAnalyzeDom.Enabled = false;
@@ -173,6 +175,93 @@ namespace JordvarmeMonitor
 
         }
 
+
+        private List<ExtractData> Measurements { get; set; }
+
+        private void Analyze()
+        {
+            try
+            {
+                var iDoc = (mshtml.IHTMLDocument2) XuWeBrowser.Document.DomDocument;
+                if (iDoc != null)
+                {
+                    var ed = new ExtractData {OuterHtmlSource = iDoc.body.outerHTML};
+                    if (ed.TryParse())
+                    {
+                        if (ed.TryAnalyzeXml())
+                        {
+                            if (ed.IsValid())
+                            {
+                                Measurements.Add(ed);
+                                if (Measurements.Count >= 2)
+                                {
+                                    if (!(Measurements[0].Equals(Measurements[1])))
+                                    {
+                                        // Measurement changed
+
+                                        var current = Measurements[1];
+
+
+                                        var fp = new CultureInfo("da");
+                                        
+
+                                        BoosterLog.InfoFormat(
+                                            fp
+                                            ,"{0};{1,6:F};{2,6:F};{3,6:F1};{4,6:F};{5,6:F};{6,6:F1};{7,6:F1};{8,6:F1};{9,6:F1};{10,6};"
+                                            , current.TimeStamp
+                                            , current.BoosterSpeed
+                                            , (current.PressureOut - current.PressureIn)*10
+                                            , current.CrossFlow/10f
+                                            , current.PressureIn
+                                            , current.PressureOut
+                                            , current.TempBrineIn
+                                            , current.TempBrineOut
+                                            , current.TempAirIndoor
+                                            , current.TempAirOutdoor
+                                            , current.CrossFlow
+                                            );
+                                    }
+
+                                    // strip off older measurements
+                                    while (Measurements.Count > 1)
+                                    {
+                                        Measurements.RemoveAt(0);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // ranges outside limits
+                                Logger.WarnFormat("Measuremen outside limits: {0}", ed);
+                            }
+                        }
+                        else
+                        {
+                            // unable to analyze Xml
+                            // aleady logged by exception.
+                        }
+                    }
+                    else
+                    {
+                        // unable to parse 
+                        Logger.WarnFormat("Unable to parse Xml: \r\n{0}\r\n", iDoc.body.outerHTML);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("",ex);
+            }
+        }
+
+
+        private void XuAnalyzeDom_Click(object sender, EventArgs e)
+        {
+            Analyze();
+        }
+
+
+
         private void XuTimer_Tick(object sender, EventArgs e)
         {
             XuAnalyzeDom_Click(sender, e);
@@ -191,7 +280,7 @@ namespace JordvarmeMonitor
             XuStop.Enabled = false;
             XuTimer1.Enabled = true;
             XuTimer.Stop();
-            
+
         }
     }
 }
